@@ -8,6 +8,7 @@ namespace Ex02_MemoryGame
     {
         static void Main()
         {
+            cout<<
             // Run() method
         }
     }

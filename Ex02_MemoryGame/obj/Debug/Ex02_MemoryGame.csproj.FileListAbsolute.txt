@@ -5,3 +5,10 @@ C:\Users\עומר\Desktop\מדעי המחשב\שנה ב'\C# .NET\B20 Ex02 Omer 3
 C:\Users\עומר\Desktop\מדעי המחשב\שנה ב'\C# .NET\B20 Ex02 Omer 316498294 Naor 313524886\Ex02_MemoryGame\obj\Debug\Ex02_MemoryGame.csproj.CoreCompileInputs.cache
 C:\Users\עומר\Desktop\מדעי המחשב\שנה ב'\C# .NET\B20 Ex02 Omer 316498294 Naor 313524886\Ex02_MemoryGame\obj\Debug\Ex02_MemoryGame.exe
 C:\Users\עומר\Desktop\מדעי המחשב\שנה ב'\C# .NET\B20 Ex02 Omer 316498294 Naor 313524886\Ex02_MemoryGame\obj\Debug\Ex02_MemoryGame.pdb
+C:\Users\Naorp\source\repos\Ex02_MemoryGame\Ex02_MemoryGame\bin\Debug\Ex02_MemoryGame.exe.config
+C:\Users\Naorp\source\repos\Ex02_MemoryGame\Ex02_MemoryGame\bin\Debug\Ex02_MemoryGame.exe
+C:\Users\Naorp\source\repos\Ex02_MemoryGame\Ex02_MemoryGame\bin\Debug\Ex02_MemoryGame.pdb
+C:\Users\Naorp\source\repos\Ex02_MemoryGame\Ex02_MemoryGame\obj\Debug\Ex02_MemoryGame.csproj.CoreCompileInputs.cache
+C:\Users\Naorp\source\repos\Ex02_MemoryGame\Ex02_MemoryGame\obj\Debug\Ex02_MemoryGame.exe
+C:\Users\Naorp\source\repos\Ex02_MemoryGame\Ex02_MemoryGame\obj\Debug\Ex02_MemoryGame.pdb
+C:\Users\Naorp\source\repos\Ex02_MemoryGame\Ex02_MemoryGame\obj\Debug\Ex02_MemoryGame.csprojAssemblyReference.cache

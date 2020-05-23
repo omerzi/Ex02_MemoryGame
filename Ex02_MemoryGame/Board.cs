@@ -64,22 +64,32 @@ namespace Ex02_MemoryGame
         }
         public void InitBoard()
         {
-            StringBuilder cardsOptions = new StringBuilder();
-            int numberOfOptinalCards = (m_Width * m_Height) / 2;
-            for (int i = 0; i < numberOfOptinalCards; i++)
+            int value = 0;
+            int counter = 1;
+            for (int i = 0; i < Height; i++)
             {
-                cardsOptions.AppendFormat("{0}{1}", i.ToString(), i.ToString());
-                //     cardsOptions.Append(char.Parse(i.ToString()) , 2);
+                for (int j = 0; j < Width; j++)
+                {
+                    m_GameBoard[i, j].Index = value;
+                    if (counter == 2)
+                    {
+                        counter = 0;
+                        value++;
+                    }
+                    counter++;
+                }
             }
             Random chooseIndexForCard = new Random();
-            int indexChoise;
-            for (int i = 0; i < Height ; i++)
+            int columnRandom, lineRandom, tempIndex;
+            for (int i = 0; i < Height; i++)
             {
-                for (int j = 0; j < Width ; j++)
+                for (int j = 0; j < Width; j++)
                 {
-                    indexChoise = chooseIndexForCard.Next(0, cardsOptions.Length - 1);
-                    m_GameBoard[i, j].Index = cardsOptions[indexChoise];
-                    cardsOptions.Remove(indexChoise, 1);
+                    columnRandom = chooseIndexForCard.Next(0, Width - 1);
+                    lineRandom = chooseIndexForCard.Next(0, Height - 1);
+                    tempIndex = m_GameBoard[i, j].Index;
+                    m_GameBoard[i, j].Index = m_GameBoard[lineRandom, columnRandom].Index;
+                    m_GameBoard[lineRandom, columnRandom].Index = tempIndex;
                 }
             }
         }

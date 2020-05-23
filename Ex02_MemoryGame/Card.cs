@@ -8,7 +8,7 @@ namespace Ex02_MemoryGame
 {
     struct Card
     {
-        private int m_Index;
+        private int  m_Index;
         private bool m_IsFlipped;
 
         public Card(int i_Index)

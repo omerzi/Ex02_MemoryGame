@@ -9,8 +9,8 @@ namespace Ex02_MemoryGame
     {
         static void Main()
         {
-            //UI memoryGameUI = new UI();
-            //memoryGameUI.SetupGame();
+            UI memoryGameUI = new UI();
+
 
             Board c = new Board(6, 6);
             for (int i = 0; i < 6; i++)
@@ -21,8 +21,8 @@ namespace Ex02_MemoryGame
                 }
             }
             //UI.PrintBoard(c);
-
-            UI.PrintBoard(c);
+            
+            memoryGameUI.PrintBoard(c);
         }
     }
 }

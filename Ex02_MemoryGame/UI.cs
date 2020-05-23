@@ -8,7 +8,14 @@ namespace Ex02_MemoryGame
 {
     class UI
     {
-        public static void PrintBoard(Board i_CurrentGame)
+        private GameManager m_Game;
+        private char[] m_ObjectArray;
+
+        public UI()
+        {
+            SetupGame();
+        }
+        public void PrintBoard(Board i_CurrentGame)
         {
             char cellToPrint;
             StringBuilder gameToPrint = new StringBuilder();
@@ -25,13 +32,13 @@ namespace Ex02_MemoryGame
                 gameToPrint.AppendFormat("{0} ", (i + 1));
                 for (int j = 0; j < i_CurrentGame.Height ; j++)
                 {
-                    if(i_CurrentGame.GameBoard[i, j].IsFlipped == false)
+                    if(i_CurrentGame[i, j].IsFlipped == false)
                     {
                        cellToPrint = ' ';
                     }
                     else
                     {
-                        cellToPrint = Convert.ToChar(i_CurrentGame.GameBoard[i, j].Index);
+                        cellToPrint = m_ObjectArray[m_Game.Board[i , j].Index];
                     }
                     //gameToPrint.AppendFormat("|  {0} ", cellToPrint );
                 }
@@ -43,16 +50,6 @@ namespace Ex02_MemoryGame
             }
             Console.WriteLine(gameToPrint);
         }
-        //public void ExitGameOrNextMove(string i_PlayerInput)
-        //{
-        //    if(i_PlayerInput=="Q" || i_PlayerInput=="q" )
-        //    {
-        //        Console.WriteLine("Bye Bye, Thank you for playing!");
-
-        //    }
-
-
-        //}
         public void ReadPlayersNames(out string o_FirstPlayerName, out string o_SecondPlayerName, out int o_NumOfPlayers)
         {
             bool checkIsValid;
@@ -101,8 +98,16 @@ Please try again, enter board height and then board width: "));
         {
             ReadPlayersNames(out string firstPlayerName, out string secondPlayerName, out int numOfPlayers);
             ReadBoardSize(out int boardWidth, out int boardHeight);
-            Game myGame = new Game(boardWidth, boardHeight, firstPlayerName, secondPlayerName, numOfPlayers);
+            m_Game = new GameManager(boardWidth, boardHeight, firstPlayerName, secondPlayerName, numOfPlayers);
+            m_ObjectArray = new char[(boardHeight * boardWidth) / 2];
+            SetSigns(m_ObjectArray);
         }
-
+        public void SetSigns(char [] i_Array)
+        {
+            for(int i = 0; i < i_Array.Length; i++)
+            {
+                i_Array[i] = (char)('A' + i);
+            }
+        }
     }
 }

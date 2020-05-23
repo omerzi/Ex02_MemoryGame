@@ -18,7 +18,7 @@ namespace Ex02_MemoryGame
                 }
             }
             //UI.PrintBoard(c);
-
+            int x = 10;
             UI.PrintBoard(c);
             
      

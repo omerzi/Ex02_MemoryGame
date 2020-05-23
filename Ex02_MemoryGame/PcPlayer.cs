@@ -9,7 +9,7 @@ namespace Ex02_MemoryGame
     class PcPlayer
     {
         private readonly string m_Name = "Computer";
-        private int m_Points;
+        private int m_Points = 0;
 
         public int Points
         {

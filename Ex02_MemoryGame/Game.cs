@@ -8,25 +8,24 @@ namespace Ex02_MemoryGame
 {
     class Game
     {
-        private Player m_Player1;
-        private Player m_Player2;
-        private PcPlayer m_OptinalPlayer = null;
-        //private UI m_InterfaceGame;
+        private Board m_Board;
+        private Player m_FirstPlayer;
+        private Player m_SecondPlayer;
+        private PcPlayer m_PcPlayer = null;
         private int m_NumberOfPlayers;
 
-        public Game(int i_NumberOfPlayers, Player i_Player1, Player i_Player2)
+        public Game(int i_BoardWidth, int i_BoardHeight, string i_FirstPlayerName, string i_SecondPlayerName, int i_NumOfPlayers)
         {
-            //this.m_InterfaceGame = new UI();
-            m_NumberOfPlayers = i_NumberOfPlayers;
-            if (i_NumberOfPlayers == 1)
+            m_Board = new Board(i_BoardWidth, i_BoardHeight);
+            m_NumberOfPlayers = i_NumOfPlayers;
+            m_FirstPlayer = new Player(i_FirstPlayerName);
+            if(i_NumOfPlayers == 1)
             {
-                m_Player1 = i_Player1;
-                m_OptinalPlayer = new PcPlayer();
+                m_PcPlayer = new PcPlayer();
             }
             else
             {
-                m_Player1 = i_Player1;
-                m_Player2 = i_Player2;
+                m_SecondPlayer = new Player(i_SecondPlayerName);
             }
         }
     }

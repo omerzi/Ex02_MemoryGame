@@ -97,5 +97,12 @@ Please try again, enter board height and then board width: "));
                 checkWidth = int.TryParse(Console.ReadLine(), out o_Width);
             }
         }
+        public void SetupGame()
+        {
+            ReadPlayersNames(out string firstPlayerName, out string secondPlayerName, out int numOfPlayers);
+            ReadBoardSize(out int boardWidth, out int boardHeight);
+            Game myGame = new Game(boardWidth, boardHeight, firstPlayerName, secondPlayerName, numOfPlayers);
+        }
+
     }
 }

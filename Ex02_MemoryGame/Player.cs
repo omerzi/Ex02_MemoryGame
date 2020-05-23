@@ -10,10 +10,10 @@ namespace Ex02_MemoryGame
     {
         private string m_Name;
         private int m_Points;
-        public Player(string i_Name, int i_Points)
+        public Player(string i_Name)
         {
             m_Name = i_Name;
-            m_Points = i_Points;
+            m_Points = 0;
         }
         
         public string Name

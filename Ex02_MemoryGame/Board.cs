@@ -57,6 +57,11 @@ namespace Ex02_MemoryGame
                 m_GameBoard = value;
             }
         }
+        public Card<char> this[int i, int j]
+        {
+            get { return m_GameBoard[i, j]; }
+            set { m_GameBoard[i, j] = value; }
+        }
         public void InitBoard()
         {
             StringBuilder cardsOptions = new StringBuilder();

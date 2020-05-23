@@ -9,20 +9,20 @@ namespace Ex02_MemoryGame
     {
         static void Main()
         {
-            UI memoryGameUI = new UI();
-            memoryGameUI.SetupGame();
-            
-            //Board c = new Board(6,6);
-            //for (int i = 0; i < 6; i++)
-            //{
-            //    for (int j = 0; j < 6; j++)
-            //    {
-            //        c.GameBoard[i, j].IsFlipped = true;
-            //    }
-            //}
-            ////UI.PrintBoard(c);
+            //UI memoryGameUI = new UI();
+            //memoryGameUI.SetupGame();
 
+            Board c = new Board(6, 6);
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 6; j++)
+                {
+                   c.GameBoard[i, j].IsFlipped = true;
+                }
+            }
             //UI.PrintBoard(c);
+
+            UI.PrintBoard(c);
         }
     }
 }

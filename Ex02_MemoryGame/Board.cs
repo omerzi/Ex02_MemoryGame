@@ -10,13 +10,13 @@ namespace Ex02_MemoryGame
     {
         private int m_Width;
         private int m_Height;
-        private Card<char>[,] m_GameBoard;
+        private Card[,] m_GameBoard;
 
         public Board(int i_Width, int i_Height)
         {
             m_Width = i_Width;
             m_Height = i_Height;
-            m_GameBoard = new Card<char>[i_Width, i_Height];
+            m_GameBoard = new Card[i_Width, i_Height];
             InitBoard();
         }
 
@@ -45,7 +45,7 @@ namespace Ex02_MemoryGame
                 m_Width = value;
             }
         }
-        public Card<char>[,] GameBoard
+        public Card[,] GameBoard
         {
             get
             {
@@ -57,7 +57,7 @@ namespace Ex02_MemoryGame
                 m_GameBoard = value;
             }
         }
-        public Card<char> this[int i, int j]
+        public Card this[int i, int j]
         {
             get { return m_GameBoard[i, j]; }
             set { m_GameBoard[i, j] = value; }
@@ -68,7 +68,8 @@ namespace Ex02_MemoryGame
             int numberOfOptinalCards = (m_Width * m_Height) / 2;
             for (int i = 0; i < numberOfOptinalCards; i++)
             {
-                cardsOptions.Append((char)('A' + i), 2);
+                cardsOptions.AppendFormat("{0}{1}", i.ToString(), i.ToString());
+                //     cardsOptions.Append(char.Parse(i.ToString()) , 2);
             }
             Random chooseIndexForCard = new Random();
             int indexChoise;
@@ -77,7 +78,7 @@ namespace Ex02_MemoryGame
                 for (int j = 0; j < Width ; j++)
                 {
                     indexChoise = chooseIndexForCard.Next(0, cardsOptions.Length - 1);
-                    m_GameBoard[i, j].Sign = cardsOptions[indexChoise];
+                    m_GameBoard[i, j].Index = cardsOptions[indexChoise];
                     cardsOptions.Remove(indexChoise, 1);
                 }
             }

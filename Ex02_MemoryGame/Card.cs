@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 
 namespace Ex02_MemoryGame
 {
-    struct Card <T>
+    struct Card
     {
-        private T m_Sign;
+        private int m_Index;
         private bool m_IsFlipped;
 
-        public Card(T i_Sign)
+        public Card(int i_Index)
         {
-            m_Sign = i_Sign;
+            m_Index = i_Index;
             m_IsFlipped = false;
         }
 
-        public T Sign
+        public int Index
         {
-            get { return m_Sign; }
-            set { m_Sign = value; }
+            get { return m_Index; }
+            set { m_Index = value; }
         }
 
         public bool IsFlipped

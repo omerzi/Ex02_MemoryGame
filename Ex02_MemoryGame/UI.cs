@@ -31,9 +31,9 @@ namespace Ex02_MemoryGame
                     }
                     else
                     {
-                        cellToPrint = i_CurrentGame.GameBoard[i, j].Sign;
+                        cellToPrint = Convert.ToChar(i_CurrentGame.GameBoard[i, j].Index);
                     }
-                    gameToPrint.AppendFormat("|  {0} ", cellToPrint );
+                    //gameToPrint.AppendFormat("|  {0} ", cellToPrint );
                 }
                 gameToPrint.Append("|");
                 gameToPrint.AppendLine();
@@ -41,7 +41,7 @@ namespace Ex02_MemoryGame
                gameToPrint.Append('=', i_CurrentGame.Height *6 - 4);
                 gameToPrint.AppendLine();
             }
-            Console.Write(gameToPrint);
+            Console.WriteLine(gameToPrint);
         }
         //public void ExitGameOrNextMove(string i_PlayerInput)
         //{

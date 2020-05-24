@@ -17,7 +17,7 @@ namespace Ex02_MemoryGame
             m_Width = i_Width;
             m_Height = i_Height;
             m_GameBoard = new Card[i_Width, i_Height];
-            InitBoard();
+            initBoard();
         }
         public int Height
         {
@@ -61,28 +61,30 @@ namespace Ex02_MemoryGame
             get { return m_GameBoard[row , (int)column]; }
             set { m_GameBoard[row, (int)column] = value; }
         }
-        public void InitBoard()
+        private void initBoard()
         {
             int value = 0;
             int counter = 1;
-            for (int i = 0; i < Height; i++)
+            for(int i = 0; i < Height; i++)
             {
-                for (int j = 0; j < Width; j++)
+                for(int j = 0; j < Width; j++)
                 {
-                    m_GameBoard[i, j].Index = value;
-                    if (counter == 2)
+                    m_GameBoard[i , j] = new Card();
+                    if(counter == 2)
                     {
                         counter = 0;
                         value++;
                     }
+
                     counter++;
                 }
             }
+
             Random chooseIndexForCard = new Random();
             int columnRandom, lineRandom, tempIndex;
-            for (int i = 0; i < Height; i++)
+            for(int i = 0; i < Height; i++)
             {
-                for (int j = 0; j < Width; j++)
+                for(int j = 0; j < Width; j++)
                 {
                     columnRandom = chooseIndexForCard.Next(0, Width - 1);
                     lineRandom = chooseIndexForCard.Next(0, Height - 1);

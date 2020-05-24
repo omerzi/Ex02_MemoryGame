@@ -6,10 +6,15 @@ using System.Threading.Tasks;
 
 namespace Ex02_MemoryGame
 {
-    struct Card
+    class Card
     {
         private int  m_Index;
         private bool m_IsFlipped;
+        public Card()
+        {
+            m_Index = 0;
+            m_IsFlipped = false;
+        }
 
         public Card(int i_Index)
         {

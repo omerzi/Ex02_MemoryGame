@@ -40,11 +40,17 @@
     <Compile Include="Board.cs" />
     <Compile Include="Card.cs" />
     <Compile Include="eBoardColumns.cs" />
+    <Compile Include="ePlayerTypes.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="PcPlayer.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="UI.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Ex02.ConsoleUtils">
+      <HintPath>..\..\..\..\Desktop\מדעי המחשב\שנה ב'\C# .NET\Ex02.ConsoleUtils.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

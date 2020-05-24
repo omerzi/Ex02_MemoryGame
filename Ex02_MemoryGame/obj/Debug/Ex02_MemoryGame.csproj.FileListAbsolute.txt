@@ -19,3 +19,5 @@ C:\Users\עומר\Source\Repos\Ex02_MemoryGame\Ex02_MemoryGame\obj\Debug\Ex02_Me
 C:\Users\עומר\Source\Repos\Ex02_MemoryGame\Ex02_MemoryGame\obj\Debug\Ex02_MemoryGame.csproj.CoreCompileInputs.cache
 C:\Users\עומר\Source\Repos\Ex02_MemoryGame\Ex02_MemoryGame\obj\Debug\Ex02_MemoryGame.exe
 C:\Users\עומר\Source\Repos\Ex02_MemoryGame\Ex02_MemoryGame\obj\Debug\Ex02_MemoryGame.pdb
+C:\Users\עומר\Source\Repos\Ex02_MemoryGame\Ex02_MemoryGame\bin\Debug\Ex02.ConsoleUtils.dll
+C:\Users\עומר\Source\Repos\Ex02_MemoryGame\Ex02_MemoryGame\obj\Debug\Ex02_MemoryGame.csproj.CopyComplete

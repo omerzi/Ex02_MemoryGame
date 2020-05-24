@@ -15,24 +15,24 @@ namespace Ex02_MemoryGame
         {
             SetupGame();
         }
-        public void PrintBoard(Board i_CurrentGame)
+        public void PrintBoard()
         {
             char cellToPrint;
             StringBuilder gameToPrint = new StringBuilder();
-            for (int i = 0; i < i_CurrentGame.Height; i++)
+            for (int i = 0; i < m_Game.Board.Height; i++)
             {
                 gameToPrint.Append("    " + (char)('A' + i));
              }
             gameToPrint.AppendLine();
             gameToPrint.Append("  ");
-            gameToPrint.Append('=', i_CurrentGame.Height *6 - 4 );
+            gameToPrint.Append('=', m_Game.Board.Height *6 - 4 );
             gameToPrint.AppendLine();
-            for (int row = 0; row < i_CurrentGame.Width ; row++)
+            for (int row = 0; row < m_Game.Board.Width ; row++)
             {
                 gameToPrint.AppendFormat("{0} ", (row + 1));
-                for (int column = 0; column < i_CurrentGame.Height ; column++)
+                for (int column = 0; column < m_Game.Board.Height ; column++)
                 {
-                    if(i_CurrentGame[(eBoardColumns)column, row].IsFlipped == false)
+                    if(m_Game.Board[(eBoardColumns)column, row].IsFlipped == false)
                     {
                        cellToPrint = ' ';
                     }
@@ -40,12 +40,12 @@ namespace Ex02_MemoryGame
                     {
                         cellToPrint = m_ObjectArray[m_Game.Board[(eBoardColumns)column, row].Index];
                     }
-                    //gameToPrint.AppendFormat("|  {0} ", cellToPrint );
+                    gameToPrint.AppendFormat("|  {0} ", cellToPrint );
                 }
                 gameToPrint.Append("|");
                 gameToPrint.AppendLine();
                 gameToPrint.Append("  ");
-               gameToPrint.Append('=', i_CurrentGame.Height *6 - 4);
+                gameToPrint.Append('=', m_Game.Board.Height *6 - 4);
                 gameToPrint.AppendLine();
             }
             Console.WriteLine(gameToPrint);
@@ -85,7 +85,7 @@ Please try again, press 1 to play against computer and 2 to play against another
 (Minimum size : 4x4, Maximum Size : 6x6 and only even values!)"));
             checkHeight = int.TryParse(Console.ReadLine(), out o_Height);
             checkWidth = int.TryParse(Console.ReadLine(), out o_Width);
-            while ((!checkHeight || (o_Height == 4 && o_Height != 6)) || (!checkWidth || (o_Width != 4 && o_Width != 6)))
+            while (!checkHeight && (o_Height != 4 || o_Height != 6) && !checkWidth && (o_Width != 4 || o_Width != 6))
             {
                 Console.WriteLine(string.Format(
 @"Something went wrong... 
@@ -108,6 +108,48 @@ Please try again, enter board height and then board width: "));
             {
                 i_Array[i] = (char)('A' + i);
             }
+        }
+        public void StartGame()
+        {
+            while(!m_Game.IsEnded())
+            {
+                MakeTurn();
+            }
+        }
+        public bool Quit(string i_Input)
+        {
+            return i_Input == "Q";
+        }
+        public void MakeTurn()
+        {
+            Ex02.ConsoleUtils.Screen.Clear();
+            PrintBoard();
+            int firstColumnChoise, firstRowChoise;
+            int secondColumnChoise, secondRowChoise;
+            bool toSleep;
+            if (m_Game.CurrentPlayer == ePlayerTypes.PC)
+            {
+                m_Game.PCTurn(out firstRowChoise, out firstColumnChoise);
+                Ex02.ConsoleUtils.Screen.Clear();
+                PrintBoard();
+                m_Game.PCTurn(out secondRowChoise, out secondColumnChoise);
+                Ex02.ConsoleUtils.Screen.Clear();
+                PrintBoard();
+                m_Game.CheckChoises(firstColumnChoise, firstRowChoise, secondColumnChoise, secondRowChoise, out toSleep);
+                if(toSleep)
+                {
+                    System.Threading.Thread.Sleep(2000);
+                }
+                m_Game.CurrentPlayer = ePlayerTypes.FirstPlayer;
+            }
+            else
+            {
+                UserTurn();
+            }
+        }
+        public void UserTurn()
+        {
+
         }
     }
 }

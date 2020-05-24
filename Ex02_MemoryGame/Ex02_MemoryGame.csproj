@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="Board.cs" />
     <Compile Include="Card.cs" />
+    <Compile Include="eBoardColumns.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="PcPlayer.cs" />
     <Compile Include="Player.cs" />

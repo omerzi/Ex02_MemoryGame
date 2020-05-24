@@ -27,18 +27,18 @@ namespace Ex02_MemoryGame
             gameToPrint.Append("  ");
             gameToPrint.Append('=', i_CurrentGame.Height *6 - 4 );
             gameToPrint.AppendLine();
-            for (int i = 0; i < i_CurrentGame.Width ; i++)
+            for (int row = 0; row < i_CurrentGame.Width ; row++)
             {
-                gameToPrint.AppendFormat("{0} ", (i + 1));
-                for (int j = 0; j < i_CurrentGame.Height ; j++)
+                gameToPrint.AppendFormat("{0} ", (row + 1));
+                for (int column = 0; column < i_CurrentGame.Height ; column++)
                 {
-                    if(i_CurrentGame[i, j].IsFlipped == false)
+                    if(i_CurrentGame[(eBoardColumns)column, row].IsFlipped == false)
                     {
                        cellToPrint = ' ';
                     }
                     else
                     {
-                        cellToPrint = m_ObjectArray[m_Game.Board[i , j].Index];
+                        cellToPrint = m_ObjectArray[m_Game.Board[(eBoardColumns)column, row].Index];
                     }
                     //gameToPrint.AppendFormat("|  {0} ", cellToPrint );
                 }
@@ -85,7 +85,7 @@ Please try again, press 1 to play against computer and 2 to play against another
 (Minimum size : 4x4, Maximum Size : 6x6 and only even values!)"));
             checkHeight = int.TryParse(Console.ReadLine(), out o_Height);
             checkWidth = int.TryParse(Console.ReadLine(), out o_Width);
-            while ((!checkHeight && o_Height != 4 && o_Height != 6) || (!checkWidth && o_Width != 4 && o_Width != 6))
+            while ((!checkHeight || (o_Height == 4 && o_Height != 6)) || (!checkWidth || (o_Width != 4 && o_Width != 6)))
             {
                 Console.WriteLine(string.Format(
 @"Something went wrong... 

@@ -19,7 +19,6 @@ namespace Ex02_MemoryGame
             m_GameBoard = new Card[i_Width, i_Height];
             InitBoard();
         }
-
         public int Height
         {
             get
@@ -57,10 +56,10 @@ namespace Ex02_MemoryGame
                 m_GameBoard = value;
             }
         }
-        public Card this[int i, int j]
+        public Card this[eBoardColumns column , int row]
         {
-            get { return m_GameBoard[i, j]; }
-            set { m_GameBoard[i, j] = value; }
+            get { return m_GameBoard[row , (int)column]; }
+            set { m_GameBoard[row, (int)column] = value; }
         }
         public void InitBoard()
         {
@@ -88,8 +87,8 @@ namespace Ex02_MemoryGame
                     columnRandom = chooseIndexForCard.Next(0, Width - 1);
                     lineRandom = chooseIndexForCard.Next(0, Height - 1);
                     tempIndex = m_GameBoard[i, j].Index;
-                    m_GameBoard[i, j].Index = m_GameBoard[lineRandom, columnRandom].Index;
-                    m_GameBoard[lineRandom, columnRandom].Index = tempIndex;
+                    m_GameBoard[i , j].Index = m_GameBoard[lineRandom, columnRandom].Index;
+                    m_GameBoard[lineRandom , columnRandom].Index = tempIndex;
                 }
             }
         }

@@ -129,6 +129,7 @@ Please try again, enter board height and then board width: "));
             bool toSleep;
             if (m_Game.CurrentPlayer == ePlayerTypes.PC)
             {
+                Console.WriteLine("PC is choosing cells");
                 m_Game.PCTurn(out firstRowChoise, out firstColumnChoise);
                 Ex02.ConsoleUtils.Screen.Clear();
                 PrintBoard();
@@ -149,7 +150,93 @@ Please try again, enter board height and then board width: "));
         }
         public void UserTurn()
         {
-
+            int firstColumnChoise, firstRowChoise;
+            int secondColumnChoise, secondRowChoise;
+            bool toSleep;
+            ReadCell(out firstRowChoise, out firstColumnChoise);
+            m_Game.ExposeCard(firstRowChoise, firstColumnChoise);
+            Ex02.ConsoleUtils.Screen.Clear();
+            PrintBoard();
+            ReadCell(out secondRowChoise, out secondColumnChoise);
+            m_Game.ExposeCard(secondRowChoise, secondColumnChoise);
+            Ex02.ConsoleUtils.Screen.Clear();
+            PrintBoard();
+            m_Game.CheckChoises(firstColumnChoise, firstRowChoise, secondColumnChoise, secondRowChoise, out toSleep);
+            if (toSleep)
+            {
+                System.Threading.Thread.Sleep(2000);
+            }
+            ChangeCurrentPlayer();
+        }
+        public void ReadCell(out int o_Row, out int o_Column)
+        {
+            int row, column;
+            Console.Write(string.Format("{0}, Please enter the cell you want to expose: ", m_Game.CurrentPlayerName()));
+            string cell = Console.ReadLine(); 
+            while (!CheckCell(cell))
+            {
+                Console.Write("Please enter the cell you want to expose: ");
+                cell = Console.ReadLine();
+            }
+            ConvertStringToCell(cell, out row, out column);
+            o_Row = row;
+            o_Column = column;
+        }
+        public bool CheckCell(string i_Cell)
+        {
+            int row, column;
+            bool IsValidInput = true;
+            if(!m_Game.CheckLength(i_Cell.Length))
+            {
+                IsValidInput = false;
+                Console.WriteLine(string.Format(
+                    @"{0} is incorrect cell!", i_Cell));
+            }
+            if (IsValidInput)
+            {
+                ConvertStringToCell(i_Cell, out row, out column);
+                if (IsValidInput && !m_Game.CheckBoundries(row, column))
+                {
+                    IsValidInput = false;
+                    Console.WriteLine(string.Format(
+                        @"{0} is out of board's boundries!", i_Cell));
+                }
+                else if (m_Game.IsAlreadyFlipped(row, column))
+                {
+                    IsValidInput = false;
+                    Console.WriteLine(string.Format(
+                        @"{0} is already flipped!", i_Cell));
+                }
+            }
+            
+            return IsValidInput;
+        }
+        public void ConvertStringToCell(string i_String, out int o_Row, out int o_Column)
+        {
+            o_Row = i_String[1] - '1';
+            o_Column = i_String[0] - 'A';
+        }
+        public void ChangeCurrentPlayer()
+        {
+            if (m_Game.NumOfPlayers == 2)
+            {
+                if (m_Game.CurrentPlayer == ePlayerTypes.FirstPlayer)
+                {
+                    m_Game.CurrentPlayer = ePlayerTypes.SecondPlayer;
+                }
+                else
+                {
+                    m_Game.CurrentPlayer = ePlayerTypes.FirstPlayer;
+                }
+            }
+            else
+            {
+                m_Game.CurrentPlayer = ePlayerTypes.PC;
+            }
         }
     }
 }
+// add quit option
+// when its pc turn, print some msg about it
+// fix incorrect board boundries
+// split to methods in initboard

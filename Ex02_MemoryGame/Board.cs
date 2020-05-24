@@ -31,7 +31,6 @@ namespace Ex02_MemoryGame
                 m_Height = value;
             }
         }
-
         public int Width
         {
             get
@@ -69,7 +68,7 @@ namespace Ex02_MemoryGame
             {
                 for(int j = 0; j < Width; j++)
                 {
-                    m_GameBoard[i , j] = new Card();
+                    m_GameBoard[i , j] = new Card(value);
                     if(counter == 2)
                     {
                         counter = 0;

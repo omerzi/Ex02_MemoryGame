@@ -24,7 +24,7 @@ namespace Ex02_MemoryGame
             m_Board = new Board(i_BoardWidth, i_BoardHeight);
             m_NumberOfPlayers = i_NumOfPlayers;
             m_FirstPlayer = new Player(i_FirstPlayerName);
-            m_CurrentPlayer = ePlayerTypes.PC;
+            m_CurrentPlayer = ePlayerTypes.FirstPlayer;
             if (i_NumOfPlayers == 1)
             {
                 m_PcPlayer = new PcPlayer();
@@ -33,6 +33,10 @@ namespace Ex02_MemoryGame
             {
                 m_SecondPlayer = new Player(i_SecondPlayerName);
             }
+        }
+        public int NumOfPlayers
+        {
+            get { return m_NumberOfPlayers; }
         }
         public ePlayerTypes CurrentPlayer
         {
@@ -93,6 +97,40 @@ namespace Ex02_MemoryGame
             {
                 m_SecondPlayer.Points++;
             }
+        }
+        public bool CheckLength(int i_Length)
+        {
+            return i_Length == 2;
+        }
+        public bool CheckBoundries(int i_Height, int i_Width)
+        {
+            return i_Height < m_Board.Height && i_Height >= 0 && i_Width < m_Board.Width && i_Width >= 0;
+        }
+        public bool IsAlreadyFlipped(int i_Row, int i_Column)
+        {
+            return m_Board[(eBoardColumns)i_Column, i_Row].IsFlipped;
+        }
+        public void ExposeCard(int i_Row, int i_Column)
+        {
+            m_Board[(eBoardColumns)i_Column, i_Row].IsFlipped = true;
+        }
+        public string CurrentPlayerName()
+        {
+            string name;
+            if(m_CurrentPlayer == ePlayerTypes.FirstPlayer)
+            {
+                name = m_FirstPlayer.Name;
+            }
+            else if (m_CurrentPlayer == ePlayerTypes.SecondPlayer)
+            {
+                name = m_SecondPlayer.Name;
+            }
+            else
+            {
+                name = m_PcPlayer.Name;
+            }
+
+            return name;
         }
     }
 

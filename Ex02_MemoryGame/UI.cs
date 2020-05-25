@@ -65,10 +65,10 @@ namespace Ex02_MemoryGame
 @"Hi there {0}! please press 1 to play against the Computer, press 2 to play against another player: ",
 o_FirstPlayerName));
             checkIsValid = int.TryParse(Console.ReadLine(), out o_NumOfPlayers);
-            while(!checkIsValid && o_NumOfPlayers != 1 && o_NumOfPlayers != 2)
+            while(!checkIsValid || (o_NumOfPlayers != 1 && o_NumOfPlayers != 2))
             {
                 Console.WriteLine(string.Format(
-@"Something went wrong... 
+@"You entered wrong number of players. 
 Please try again, press 1 to play against computer and 2 to play against another player: "));
                 checkIsValid = int.TryParse(Console.ReadLine(), out o_NumOfPlayers);
             }
@@ -95,7 +95,7 @@ Please try again, press 1 to play against computer and 2 to play against another
             while((!checkHeight || (o_Height != 4 && o_Height != 6)) || (!checkWidth || (o_Width != 4 && o_Width != 6)))
             {
                 Console.WriteLine(string.Format(
-@"Something went wrong... 
+@"You entered wrong board sizes. 
 Please try again, enter board height and then board width: "));
                 checkHeight = int.TryParse(Console.ReadLine(), out o_Height);
                 checkWidth = int.TryParse(Console.ReadLine(), out o_Width);

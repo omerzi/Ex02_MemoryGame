@@ -239,4 +239,3 @@ Please try again, enter board height and then board width: "));
 // add quit option
 // when its pc turn, print some msg about it
 // fix incorrect board boundries
-// split to methods in initboard

@@ -55,7 +55,7 @@ namespace Ex02_MemoryGame
                 m_GameBoard = value;
             }
         }
-        public Card this[eBoardColumns column , int row]
+        public Card this[int column , int row]
         {
             get { return m_GameBoard[row , (int)column]; }
             set { m_GameBoard[row, (int)column] = value; }
@@ -63,18 +63,18 @@ namespace Ex02_MemoryGame
         private void initBoard()
         {
             putIndexersInBoard();
-            suffleIndexers();
+            shuffleIndexers();
         }
         private void putIndexersInBoard()
         {
             int value = 0;
             int counter = 1;
-            for (int i = 0; i < Height; i++)
+            for(int i = 0; i < Height; i++)
             {
-                for (int j = 0; j < Width; j++)
+                for(int j = 0; j < Width; j++)
                 {
                     m_GameBoard[i, j] = new Card(value);
-                    if (counter == 2)
+                    if(counter == 2)
                     {
                         counter = 0;
                         value++;
@@ -84,13 +84,13 @@ namespace Ex02_MemoryGame
                 }
             }
         }
-        private void suffleIndexers()
+        private void shuffleIndexers()
         {
             Random chooseIndexForCard = new Random();
             int columnRandom, lineRandom, tempIndex;
-            for (int i = 0; i < Height; i++)
+            for(int i = 0; i < Height; i++)
             {
-                for (int j = 0; j < Width; j++)
+                for(int j = 0; j < Width; j++)
                 {
                     columnRandom = chooseIndexForCard.Next(0, Width - 1);
                     lineRandom = chooseIndexForCard.Next(0, Height - 1);

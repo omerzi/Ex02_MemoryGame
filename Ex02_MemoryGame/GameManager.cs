@@ -62,24 +62,25 @@ namespace Ex02_MemoryGame
             Random cellChoise = new Random();
             o_ColumnChoise = cellChoise.Next(0, m_Board.Width - 1);
             o_RowChoise = cellChoise.Next(0, m_Board.Height - 1);
-            while (m_Board[(eBoardColumns)o_ColumnChoise, o_RowChoise].IsFlipped)
+            while(m_Board[o_ColumnChoise , o_RowChoise].IsFlipped)
             {
                 o_ColumnChoise = cellChoise.Next(0, m_Board.Width - 1);
                 o_RowChoise = cellChoise.Next(0, m_Board.Height - 1);
             }
-            m_Board[(eBoardColumns)o_ColumnChoise, o_RowChoise].IsFlipped = true;
+
+            ExposeCard(o_RowChoise, o_ColumnChoise);
         }
         public void CheckChoises(int i_FirstColumnChoise, int i_FirstRowChoise, int i_SecondColumnChoise, int i_SecondRowChoise, out bool o_ToSleep)
         {
-            if(m_Board[(eBoardColumns)i_FirstColumnChoise, i_FirstRowChoise].Index == m_Board[(eBoardColumns)i_SecondColumnChoise, i_SecondRowChoise].Index)
+            if(m_Board[i_FirstColumnChoise, i_FirstRowChoise].Index == m_Board[i_SecondColumnChoise, i_SecondRowChoise].Index)
             {
                 updatePoints();
                 o_ToSleep = false;
             }
             else
             {
-                m_Board[(eBoardColumns)i_FirstColumnChoise, i_FirstRowChoise].IsFlipped = false;
-                m_Board[(eBoardColumns)i_SecondColumnChoise, i_SecondRowChoise].IsFlipped = false;
+                m_Board[i_FirstColumnChoise, i_FirstRowChoise].IsFlipped = false;
+                m_Board[i_SecondColumnChoise, i_SecondRowChoise].IsFlipped = false;
                 o_ToSleep = true;
             }
         }
@@ -108,11 +109,11 @@ namespace Ex02_MemoryGame
         }
         public bool IsAlreadyFlipped(int i_Row, int i_Column)
         {
-            return m_Board[(eBoardColumns)i_Column, i_Row].IsFlipped;
+            return m_Board[i_Column, i_Row].IsFlipped;
         }
         public void ExposeCard(int i_Row, int i_Column)
         {
-            m_Board[(eBoardColumns)i_Column, i_Row].IsFlipped = true;
+            m_Board[i_Column, i_Row].IsFlipped = true;
         }
         public string CurrentPlayerName()
         {
@@ -132,6 +133,39 @@ namespace Ex02_MemoryGame
 
             return name;
         }
-    }
+        public string GetWinnerNameAndPoints(out int numOfPoints)
+        {
+            string winnerName;
+            numOfPoints = Math.Max(m_FirstPlayer.Points, Math.Max(m_PcPlayer.Points, m_SecondPlayer.Points));
+            
+            if(m_NumberOfPlayers == 1)
+            {
+                if(m_PcPlayer.Points > m_FirstPlayer.Points)
+                {
+                    winnerName = m_PcPlayer.Name;
+                    numOfPoints = m_PcPlayer.Points;
+                }
+                else
+                {
+                    winnerName = m_FirstPlayer.Name;
+                    numOfPoints = m_FirstPlayer.Points;
+                }
+            }
+            else
+            {
+                if(m_SecondPlayer.Points > m_FirstPlayer.Points)
+                {
+                    winnerName = m_SecondPlayer.Name;
+                    numOfPoints = m_SecondPlayer.Points;
+                }
+                else
+                {
+                    winnerName = m_FirstPlayer.Name;
+                    numOfPoints = m_FirstPlayer.Points;
+                }
+            }
 
+            return winnerName;
+        }
+    }
 }

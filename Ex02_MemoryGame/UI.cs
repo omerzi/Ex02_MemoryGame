@@ -32,13 +32,13 @@ namespace Ex02_MemoryGame
                 gameToPrint.AppendFormat("{0} ", (row + 1));
                 for (int column = 0; column < m_Game.Board.Height ; column++)
                 {
-                    if(m_Game.Board[(eBoardColumns)column, row].IsFlipped == false)
+                    if(m_Game.Board[column, row].IsFlipped == false)
                     {
                        cellToPrint = ' ';
                     }
                     else
                     {
-                        cellToPrint = m_ObjectArray[m_Game.Board[(eBoardColumns)column, row].Index];
+                        cellToPrint = m_ObjectArray[m_Game.Board[column, row].Index];
                     }
                     gameToPrint.AppendFormat("|  {0} ", cellToPrint );
                 }
@@ -85,7 +85,7 @@ Please try again, press 1 to play against computer and 2 to play against another
 (Minimum size : 4x4, Maximum Size : 6x6 and only even values!)"));
             checkHeight = int.TryParse(Console.ReadLine(), out o_Height);
             checkWidth = int.TryParse(Console.ReadLine(), out o_Width);
-            while (!checkHeight && (o_Height != 4 || o_Height != 6) && !checkWidth && (o_Width != 4 || o_Width != 6))
+            while ((!checkHeight || (o_Height != 4 && o_Height != 6)) || (!checkWidth || (o_Width != 4 && o_Width != 6)))
             {
                 Console.WriteLine(string.Format(
 @"Something went wrong... 
@@ -115,6 +115,8 @@ Please try again, enter board height and then board width: "));
             {
                 MakeTurn();
             }
+
+            CongratsWinner();
         }
      
         public void MakeTurn()
@@ -124,7 +126,7 @@ Please try again, enter board height and then board width: "));
             int firstColumnChoise, firstRowChoise;
             int secondColumnChoise, secondRowChoise;
             bool toSleep;
-            if (m_Game.CurrentPlayer == ePlayerTypes.PC)
+            if(m_Game.CurrentPlayer == ePlayerTypes.PC)
             {
                 Console.WriteLine("PC is choosing cells");
                 m_Game.PCTurn(out firstRowChoise, out firstColumnChoise);
@@ -139,6 +141,7 @@ Please try again, enter board height and then board width: "));
                 {
                     System.Threading.Thread.Sleep(2000);
                 }
+
                 m_Game.CurrentPlayer = ePlayerTypes.FirstPlayer;
             }
             else
@@ -160,10 +163,11 @@ Please try again, enter board height and then board width: "));
             Ex02.ConsoleUtils.Screen.Clear();
             PrintBoard();
             m_Game.CheckChoises(firstColumnChoise, firstRowChoise, secondColumnChoise, secondRowChoise, out toSleep);
-            if (toSleep)
+            if(toSleep)
             {
                 System.Threading.Thread.Sleep(2000);
             }
+
             ChangeCurrentPlayer();
         }
         public void ReadCell(out int o_Row, out int o_Column)
@@ -171,22 +175,13 @@ Please try again, enter board height and then board width: "));
             string cell;
             bool Quit;
             int row, column;
-            do
+            Console.Write(string.Format("{0}, Please enter the cell you want to expose: ", m_Game.CurrentPlayerName()));
+            string cell = Console.ReadLine(); 
+            while (!CheckCell(cell))
             {
-                Console.Write(string.Format("{0}, Please enter the cell you want to expose: ", m_Game.CurrentPlayerName()));
+                Console.Write("Please enter the cell you want to expose: ");
                 cell = Console.ReadLine();
-                Quit = CheckIfToQuit(cell);
-                if (Quit)
-                {
-                    Console.Write(string.Format(
-@"{0} You decided to finish the game,
-thank you 
-and Bye Bye till next time!", m_Game.CurrentPlayerName()));
-                    System.Threading.Thread.Sleep(2000);
-                    Environment.Exit('Q');
-                }
             }
-            while (!CheckCell(cell));
             ConvertStringToCell(cell, out row, out column);
             o_Row = row;
             o_Column = column;
@@ -205,16 +200,16 @@ and Bye Bye till next time!", m_Game.CurrentPlayerName()));
                 Console.WriteLine(string.Format(
                     @"{0} is incorrect cell!", i_Cell));
             }
-            if (IsValidInput)
+            if(IsValidInput)
             {
                 ConvertStringToCell(i_Cell, out row, out column);
-                if (IsValidInput && !m_Game.CheckBoundries(row, column))
+                if(!m_Game.CheckBoundries(row, column))
                 {
                     IsValidInput = false;
                     Console.WriteLine(string.Format(
                         @"{0} is out of board's boundries!", i_Cell));
                 }
-                else if (m_Game.IsAlreadyFlipped(row, column))
+                else if(m_Game.IsAlreadyFlipped(row, column))
                 {
                     IsValidInput = false;
                     Console.WriteLine(string.Format(
@@ -248,6 +243,7 @@ and Bye Bye till next time!", m_Game.CurrentPlayerName()));
             }
         }
     }
-}
+}//dsdsds
+// add quit option
 // when its pc turn, print some msg about it
-// fix incorrect board boundries
+

@@ -6,19 +6,20 @@ using System.Threading.Tasks;
 
 namespace Ex02_MemoryGame
 {
-    class Board
+    public class Board
     {
         private int m_Width;
         private int m_Height;
         private Card[,] m_GameBoard;
 
-        public Board(int i_Width, int i_Height)
+        public Board(int i_Height, int i_Width)
         {
             m_Width = i_Width;
             m_Height = i_Height;
-            m_GameBoard = new Card[i_Width, i_Height];
+            m_GameBoard = new Card[i_Height, i_Width];
             initBoard();
         }
+
         public int Height
         {
             get
@@ -31,6 +32,7 @@ namespace Ex02_MemoryGame
                 m_Height = value;
             }
         }
+
         public int Width
         {
             get
@@ -43,6 +45,7 @@ namespace Ex02_MemoryGame
                 m_Width = value;
             }
         }
+
         public Card[,] GameBoard
         {
             get
@@ -55,16 +58,19 @@ namespace Ex02_MemoryGame
                 m_GameBoard = value;
             }
         }
-        public Card this[int column , int row]
+
+        public Card this[int row, int column]
         {
-            get { return m_GameBoard[row , (int)column]; }
-            set { m_GameBoard[row, (int)column] = value; }
+            get { return m_GameBoard[row, column]; }
+            set { m_GameBoard[row, column] = value; }
         }
+
         private void initBoard()
         {
             putIndexersInBoard();
             shuffleIndexers();
         }
+
         private void putIndexersInBoard()
         {
             int value = 0;
@@ -84,6 +90,7 @@ namespace Ex02_MemoryGame
                 }
             }
         }
+
         private void shuffleIndexers()
         {
             Random chooseIndexForCard = new Random();
@@ -92,8 +99,8 @@ namespace Ex02_MemoryGame
             {
                 for(int j = 0; j < Width; j++)
                 {
-                    columnRandom = chooseIndexForCard.Next(0, Width - 1);
-                    lineRandom = chooseIndexForCard.Next(0, Height - 1);
+                    columnRandom = chooseIndexForCard.Next(0, Width);
+                    lineRandom = chooseIndexForCard.Next(0, Height);
                     tempIndex = m_GameBoard[i, j].Index;
                     m_GameBoard[i, j].Index = m_GameBoard[lineRandom, columnRandom].Index;
                     m_GameBoard[lineRandom, columnRandom].Index = tempIndex;
@@ -101,5 +108,4 @@ namespace Ex02_MemoryGame
             }
         }
     }
-   
 }

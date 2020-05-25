@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Ex02_MemoryGame
 {
-    class Player
+    public class Player
     {
         private string m_Name;
         private int m_Points;
+
         public Player(string i_Name)
         {
             m_Name = i_Name;
@@ -18,14 +19,28 @@ namespace Ex02_MemoryGame
         
         public string Name
         {
-            get { return m_Name; }
-            set { m_Name = value; }
+            get 
+            {
+                return m_Name; 
+            }
+
+            set 
+            {
+                m_Name = value; 
+            }
         }
 
         public int Points
         {
-            get { return m_Points; }
-            set { m_Points = value; }
+            get 
+            {
+                return m_Points; 
+            }
+
+            set 
+            {
+                m_Points = value;
+            }
         }
     }
 }

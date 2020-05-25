@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Ex02_MemoryGame
 {
-    class Program
+    public class Program
     {
-        static void Main()
+        public static void Main()
         {
             UI memoryGameUI = new UI();
             memoryGameUI.StartGame();

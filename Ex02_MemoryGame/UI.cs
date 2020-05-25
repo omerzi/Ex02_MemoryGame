@@ -111,15 +111,12 @@ Please try again, enter board height and then board width: "));
         }
         public void StartGame()
         {
-            while(!m_Game.IsEnded())
+            while(!m_Game.IsEnded() )
             {
                 MakeTurn();
             }
         }
-        public bool Quit(string i_Input)
-        {
-            return i_Input == "Q";
-        }
+     
         public void MakeTurn()
         {
             Ex02.ConsoleUtils.Screen.Clear();
@@ -131,6 +128,7 @@ Please try again, enter board height and then board width: "));
             {
                 Console.WriteLine("PC is choosing cells");
                 m_Game.PCTurn(out firstRowChoise, out firstColumnChoise);
+                System.Threading.Thread.Sleep(2000);
                 Ex02.ConsoleUtils.Screen.Clear();
                 PrintBoard();
                 m_Game.PCTurn(out secondRowChoise, out secondColumnChoise);
@@ -170,17 +168,32 @@ Please try again, enter board height and then board width: "));
         }
         public void ReadCell(out int o_Row, out int o_Column)
         {
+            string cell;
+            bool Quit;
             int row, column;
-            Console.Write(string.Format("{0}, Please enter the cell you want to expose: ", m_Game.CurrentPlayerName()));
-            string cell = Console.ReadLine(); 
-            while (!CheckCell(cell))
+            do
             {
-                Console.Write("Please enter the cell you want to expose: ");
+                Console.Write(string.Format("{0}, Please enter the cell you want to expose: ", m_Game.CurrentPlayerName()));
                 cell = Console.ReadLine();
+                Quit = CheckIfToQuit(cell);
+                if (Quit)
+                {
+                    Console.Write(string.Format(
+@"{0} You decided to finish the game,
+thank you 
+and Bye Bye till next time!", m_Game.CurrentPlayerName()));
+                    System.Threading.Thread.Sleep(2000);
+                    Environment.Exit('Q');
+                }
             }
+            while (!CheckCell(cell));
             ConvertStringToCell(cell, out row, out column);
             o_Row = row;
             o_Column = column;
+        }
+        public bool CheckIfToQuit(string i_Input)
+        {
+            return i_Input == "Q";
         }
         public bool CheckCell(string i_Cell)
         {
@@ -235,7 +248,6 @@ Please try again, enter board height and then board width: "));
             }
         }
     }
-}//dsdsds
-// add quit option
+}
 // when its pc turn, print some msg about it
 // fix incorrect board boundries

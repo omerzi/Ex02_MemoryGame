@@ -15,7 +15,6 @@ C:\Users\Naorp\source\repos\Ex02_MemoryGame\Ex02_MemoryGame\obj\Debug\Ex02_Memor
 C:\Users\עומר\Source\Repos\Ex02_MemoryGame\Ex02_MemoryGame\bin\Debug\Ex02_MemoryGame.exe.config
 C:\Users\עומר\Source\Repos\Ex02_MemoryGame\Ex02_MemoryGame\bin\Debug\Ex02_MemoryGame.exe
 C:\Users\עומר\Source\Repos\Ex02_MemoryGame\Ex02_MemoryGame\bin\Debug\Ex02_MemoryGame.pdb
-C:\Users\עומר\Source\Repos\Ex02_MemoryGame\Ex02_MemoryGame\obj\Debug\Ex02_MemoryGame.csprojAssemblyReference.cache
 C:\Users\עומר\Source\Repos\Ex02_MemoryGame\Ex02_MemoryGame\obj\Debug\Ex02_MemoryGame.csproj.CoreCompileInputs.cache
 C:\Users\עומר\Source\Repos\Ex02_MemoryGame\Ex02_MemoryGame\obj\Debug\Ex02_MemoryGame.exe
 C:\Users\עומר\Source\Repos\Ex02_MemoryGame\Ex02_MemoryGame\obj\Debug\Ex02_MemoryGame.pdb

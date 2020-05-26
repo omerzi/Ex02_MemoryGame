@@ -56,31 +56,49 @@ namespace Ex02_MemoryGame
             Console.WriteLine(gameToPrint);
         }
 
-        public void ReadPlayersNames(out string o_FirstPlayerName, out string o_SecondPlayerName, out int o_NumOfPlayers)
+        public void ReadPlayersNames(out string o_FirstPlayerName, out string o_SecondPlayerName, out eGameTypes o_GameType)
         {
-            bool checkIsValid;
             Console.WriteLine("Hello, please enter your name: ");
-            o_FirstPlayerName = Console.ReadLine();
+            CheckName(out string name);
+            o_FirstPlayerName = name;
             Console.WriteLine(string.Format(
-@"Hi there {0}! please press 1 to play against the Computer, press 2 to play against another player: ",
+"Hi there {0}! please press 1 to play against the Computer, press 2 to play against another player: ",
 o_FirstPlayerName));
-            checkIsValid = int.TryParse(Console.ReadLine(), out o_NumOfPlayers);
-            while(!checkIsValid || (o_NumOfPlayers != 1 && o_NumOfPlayers != 2))
-            {
-                Console.WriteLine(string.Format(
-@"You entered wrong number of players. 
-Please try again, press 1 to play against computer and 2 to play against another player: "));
-                checkIsValid = int.TryParse(Console.ReadLine(), out o_NumOfPlayers);
-            }
-
-            if(o_NumOfPlayers == 1)
+            CheckGameType(out int numOfPlayers);
+            o_GameType = (eGameTypes)numOfPlayers;
+            if(o_GameType == eGameTypes.AgainstPC)
             {
                 o_SecondPlayerName = "PC";
             }
             else
             {
                 Console.WriteLine("Please enter the second player name: ");
-                o_SecondPlayerName = Console.ReadLine();
+                CheckName(out name);
+                o_SecondPlayerName = name;
+            }
+        }
+
+        public void CheckName(out string o_Name)
+        {
+            o_Name = Console.ReadLine();
+            while(string.IsNullOrWhiteSpace(o_Name))
+            {
+                Console.Write(string.Format(
+@"Your name cannot be empty or consist only white-space characters,
+please enter a valid name: "));
+                o_Name = Console.ReadLine();
+            }
+        }
+
+        public void CheckGameType(out int o_NumOfPlayers)
+        {
+            bool checkIsValid = int.TryParse(Console.ReadLine(), out o_NumOfPlayers);
+            while (!checkIsValid || (o_NumOfPlayers != (int)eGameTypes.AgainstPC && o_NumOfPlayers != (int)eGameTypes.AgainstPlayer))
+            {
+                Console.WriteLine(string.Format(
+@"You entered wrong number of players. 
+Please try again, press 1 to play against computer and 2 to play against another player: "));
+                checkIsValid = int.TryParse(Console.ReadLine(), out o_NumOfPlayers);
             }
         }
 
@@ -92,7 +110,7 @@ Please try again, press 1 to play against computer and 2 to play against another
 (Minimum size : 4x4, Maximum Size : 6x6 and only even values!)"));
             checkHeight = int.TryParse(Console.ReadLine(), out o_Height);
             checkWidth = int.TryParse(Console.ReadLine(), out o_Width);
-            while((!checkHeight || (o_Height != 4 && o_Height != 6)) || (!checkWidth || (o_Width != 4 && o_Width != 6)))
+            while (!checkHeight || o_Height < 4 || o_Height > 6 || !checkWidth || o_Width < 4 || o_Width > 6 || (o_Height * o_Width) % 2 != 0)
             {
                 Console.WriteLine(string.Format(
 @"You entered wrong board sizes. 
@@ -104,9 +122,9 @@ Please try again, enter board height and then board width: "));
 
         public void SetupGame()
         {
-            ReadPlayersNames(out string firstPlayerName, out string secondPlayerName, out int numOfPlayers);
+            ReadPlayersNames(out string firstPlayerName, out string secondPlayerName, out eGameTypes gameType);
             ReadBoardSize(out int boardWidth, out int boardHeight);
-            m_Game = new GameManager(boardWidth, boardHeight, firstPlayerName, secondPlayerName, numOfPlayers);
+            m_Game = new GameManager(boardWidth, boardHeight, firstPlayerName, secondPlayerName, gameType);
             m_ObjectArray = new char[(boardHeight * boardWidth) / 2];
             SetSigns(m_ObjectArray);
         }
@@ -134,22 +152,18 @@ Please try again, enter board height and then board width: "));
         {
             Ex02.ConsoleUtils.Screen.Clear();
             PrintBoard();
-            int firstColumnChoise, firstRowChoise;
-            int secondColumnChoise, secondRowChoise;
-            bool toSleep;
-            if(m_Game.CurrentPlayer == ePlayerTypes.PC)
+            if (m_Game.CurrentPlayer == ePlayerTypes.PC)
             {
                 Console.WriteLine("PC is choosing cells");
-                m_Game.PCTurn(out firstRowChoise, out firstColumnChoise);
+                m_Game.PCTurn(out int firstRowChoise, out int firstColumnChoise);
                 System.Threading.Thread.Sleep(2000);
                 Ex02.ConsoleUtils.Screen.Clear();
                 PrintBoard();
-                Console.WriteLine("now choosing cell 2 before printing");
-                m_Game.PCTurn(out secondRowChoise, out secondColumnChoise);
+                m_Game.PCTurn(out int secondRowChoise, out int secondColumnChoise);
                 Ex02.ConsoleUtils.Screen.Clear();
                 PrintBoard();
-                m_Game.CheckChoises(firstColumnChoise, firstRowChoise, secondColumnChoise, secondRowChoise, out toSleep);
-                if(toSleep)
+                m_Game.CheckChoises(firstColumnChoise, firstRowChoise, secondColumnChoise, secondRowChoise, out bool toSleep);
+                if (toSleep)
                 {
                     System.Threading.Thread.Sleep(2000);
                 }
@@ -164,18 +178,15 @@ Please try again, enter board height and then board width: "));
 
         public void UserTurn()
         {
-            int firstColumnChoise, firstRowChoise;
-            int secondColumnChoise, secondRowChoise;
-            bool toSleep;
-            ReadCell(out firstRowChoise, out firstColumnChoise);
+            ReadCell(out int firstRowChoise, out int firstColumnChoise);
             m_Game.ExposeCard(firstRowChoise, firstColumnChoise);
             Ex02.ConsoleUtils.Screen.Clear();
             PrintBoard();
-            ReadCell(out secondRowChoise, out secondColumnChoise);
+            ReadCell(out int secondRowChoise, out int secondColumnChoise);
             m_Game.ExposeCard(secondRowChoise, secondColumnChoise);
             Ex02.ConsoleUtils.Screen.Clear();
             PrintBoard();
-            m_Game.CheckChoises(firstColumnChoise, firstRowChoise, secondColumnChoise, secondRowChoise, out toSleep);
+            m_Game.CheckChoises(firstColumnChoise, firstRowChoise, secondColumnChoise, secondRowChoise, out bool toSleep);
             if(toSleep)
             {
                 System.Threading.Thread.Sleep(2000);
@@ -188,7 +199,6 @@ Please try again, enter board height and then board width: "));
         {
             string cell;
             bool Quit;
-            int row, column;
             do
             {
                 Console.Write(string.Format("{0}, Please enter the cell you want to expose: ", m_Game.CurrentPlayerName()));
@@ -206,7 +216,7 @@ m_Game.CurrentPlayerName()));
                 }
             }
             while (!CheckCell(cell));
-            ConvertStringToCell(cell, out row, out column);
+            ConvertStringToCell(cell, out int row, out int column);
             o_Row = row;
             o_Column = column;
         }
@@ -218,9 +228,8 @@ m_Game.CurrentPlayerName()));
 
         public bool CheckCell(string i_Cell)
         {
-            int row, column;
             bool IsValidInput = true;
-            if(!m_Game.CheckLength(i_Cell.Length))
+            if (!m_Game.CheckLength(i_Cell.Length))
             {
                 IsValidInput = false;
                 Console.WriteLine(string.Format(
@@ -230,7 +239,7 @@ m_Game.CurrentPlayerName()));
 
             if(IsValidInput)
             {
-                ConvertStringToCell(i_Cell, out row, out column);
+                ConvertStringToCell(i_Cell, out int row, out int column);
                 if(!m_Game.CheckBoundries(row, column))
                 {
                     IsValidInput = false;
@@ -258,7 +267,7 @@ m_Game.CurrentPlayerName()));
 
         public void ChangeCurrentPlayer()
         {
-            if (m_Game.NumOfPlayers == 2)
+            if (m_Game.GameType == eGameTypes.AgainstPlayer)
             {
                 if (m_Game.CurrentPlayer == ePlayerTypes.FirstPlayer)
                 {
@@ -277,8 +286,7 @@ m_Game.CurrentPlayerName()));
 
         public void CongratsWinner()
         {
-            int numOfPoints;
-            string winnerName = m_Game.GetWinnerNameAndPoints(out numOfPoints);
+            string winnerName = m_Game.GetWinnerNameAndPoints(out int numOfPoints);
             Console.WriteLine(string.Format(
 "Congratiulations {0}! you won the game with {1} points!",
 winnerName,

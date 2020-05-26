@@ -12,7 +12,7 @@ namespace Ex02_MemoryGame
         private Player m_FirstPlayer;
         private Player m_SecondPlayer;
         private PcPlayer m_PcPlayer = null;
-        private int m_NumberOfPlayers;
+        private eGameTypes m_GameType;
         private ePlayerTypes m_CurrentPlayer;
 
         public Board Board
@@ -23,13 +23,13 @@ namespace Ex02_MemoryGame
             }
         }
 
-        public GameManager(int i_BoardWidth, int i_BoardHeight, string i_FirstPlayerName, string i_SecondPlayerName, int i_NumOfPlayers)
+        public GameManager(int i_BoardWidth, int i_BoardHeight, string i_FirstPlayerName, string i_SecondPlayerName, eGameTypes i_GameType)
         {
             m_Board = new Board(i_BoardHeight, i_BoardWidth);
-            m_NumberOfPlayers = i_NumOfPlayers;
+            m_GameType = i_GameType;
             m_FirstPlayer = new Player(i_FirstPlayerName);
             m_CurrentPlayer = ePlayerTypes.FirstPlayer;
-            if (i_NumOfPlayers == 1)
+            if(i_GameType == eGameTypes.AgainstPC)
             {
                 m_PcPlayer = new PcPlayer();
             }
@@ -39,11 +39,11 @@ namespace Ex02_MemoryGame
             }
         }
 
-        public int NumOfPlayers
+        public eGameTypes GameType
         {
             get
             {
-                return m_NumberOfPlayers;
+                return m_GameType;
             }
         }
 
@@ -63,13 +63,13 @@ namespace Ex02_MemoryGame
         public bool IsEnded()
         {
             bool IsEnded;
-            if(m_NumberOfPlayers == 1)
+            if(m_GameType == eGameTypes.AgainstPC)
             {
-                IsEnded = m_FirstPlayer.Points + m_PcPlayer.Points == m_Board.Width * m_Board.Height / 2;
+                IsEnded = m_FirstPlayer.Points + m_PcPlayer.Points == (m_Board.Width * m_Board.Height) / 2;
             }
             else
             {
-                IsEnded = m_FirstPlayer.Points + m_SecondPlayer.Points == m_Board.Width * m_Board.Height / 2;
+                IsEnded = m_FirstPlayer.Points + m_SecondPlayer.Points == (m_Board.Width * m_Board.Height) / 2;
             }
 
             return IsEnded;
@@ -87,6 +87,14 @@ namespace Ex02_MemoryGame
             }
 
             ExposeCard(o_RowChoise, o_ColumnChoise);
+        }
+
+        private int indexHashing()
+        {
+            int hashedIndex;
+            Random randIndex = new Random();
+            hashedIndex = randIndex.Next(0, m_Board.Width * m_Board.Height);
+            return hashedIndex % ((m_Board.Width * m_Board.Height) / 2);
         }
 
         public void CheckChoises(int i_FirstColumnChoise, int i_FirstRowChoise, int i_SecondColumnChoise, int i_SecondRowChoise, out bool o_ToSleep)

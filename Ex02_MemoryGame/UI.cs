@@ -20,30 +20,30 @@ namespace Ex02_MemoryGame
         {
             char cellToPrint;
             StringBuilder gameToPrint = new StringBuilder();
-            for(int i = 0; i < m_Game.Board.Width; i++)
+            for (int i = 0; i < m_Game.Board.Width; i++)
             {
                 gameToPrint.Append("    " + (char)('A' + i));
             }
 
             gameToPrint.AppendLine();
             gameToPrint.Append("  ");
-            gameToPrint.Append('=', (m_Game.Board.Width * 6) - 4 );
+            gameToPrint.Append('=', (m_Game.Board.Width * 6) - 4);
             gameToPrint.AppendLine();
-            for(int row = 0; row < m_Game.Board.Height; row++)
+            for (int row = 0; row < m_Game.Board.Height; row++)
             {
                 gameToPrint.AppendFormat("{0} ", row + 1);
-                for(int column = 0; column < m_Game.Board.Width; column++)
+                for (int column = 0; column < m_Game.Board.Width; column++)
                 {
-                    if(m_Game.Board[row, column].IsFlipped == false)
+                    if (m_Game.Board[row, column].IsFlipped == false)
                     {
-                       cellToPrint = ' ';
+                        cellToPrint = ' ';
                     }
                     else
                     {
                         cellToPrint = m_ObjectArray[m_Game.Board[row, column].Index];
                     }
 
-                    gameToPrint.AppendFormat("|  {0} ", cellToPrint );
+                    gameToPrint.AppendFormat("|  {0} ", cellToPrint);
                 }
 
                 gameToPrint.Append("|");
@@ -59,29 +59,29 @@ namespace Ex02_MemoryGame
         public void ReadPlayersNames(out string o_FirstPlayerName, out string o_SecondPlayerName, out eGameTypes o_GameType)
         {
             Console.WriteLine("Hello, please enter your name: ");
-            CheckName(out string name);
+            checkName(out string name);
             o_FirstPlayerName = name;
             Console.WriteLine(string.Format(
 "Hi there {0}! please press 1 to play against the Computer, press 2 to play against another player: ",
 o_FirstPlayerName));
-            CheckGameType(out int numOfPlayers);
+            checkGameType(out int numOfPlayers);
             o_GameType = (eGameTypes)numOfPlayers;
-            if(o_GameType == eGameTypes.AgainstPC)
+            if (o_GameType == eGameTypes.AgainstPC)
             {
                 o_SecondPlayerName = "PC";
             }
             else
             {
                 Console.WriteLine("Please enter the second player name: ");
-                CheckName(out name);
+                checkName(out name);
                 o_SecondPlayerName = name;
             }
         }
 
-        public void CheckName(out string o_Name)
+        private void checkName(out string o_Name)
         {
             o_Name = Console.ReadLine();
-            while(string.IsNullOrWhiteSpace(o_Name))
+            while (string.IsNullOrWhiteSpace(o_Name))
             {
                 Console.Write(string.Format(
 @"Your name cannot be empty or consist only white-space characters,
@@ -90,7 +90,7 @@ please enter a valid name: "));
             }
         }
 
-        public void CheckGameType(out int o_NumOfPlayers)
+        private void checkGameType(out int o_NumOfPlayers)
         {
             bool checkIsValid = int.TryParse(Console.ReadLine(), out o_NumOfPlayers);
             while (!checkIsValid || (o_NumOfPlayers != (int)eGameTypes.AgainstPC && o_NumOfPlayers != (int)eGameTypes.AgainstPlayer))
@@ -131,7 +131,7 @@ Please try again, enter board height and then board width: "));
 
         public void SetSigns(char[] i_Array)
         {
-            for(int i = 0; i < i_Array.Length; i++)
+            for (int i = 0; i < i_Array.Length; i++)
             {
                 i_Array[i] = (char)('A' + i);
             }
@@ -139,13 +139,18 @@ Please try again, enter board height and then board width: "));
 
         public void StartGame()
         {
-            while(!m_Game.IsEnded() )
+            while (!m_Game.IsEnded())
             {
                 MakeTurn();
             }
 
             CongratsWinner();
-            System.Threading.Thread.Sleep(3000);
+            if (toStartOver())
+            {
+                Ex02.ConsoleUtils.Screen.Clear();
+                SetupGame();
+                StartGame();
+            }
         }
 
         public void MakeTurn()
@@ -187,7 +192,7 @@ Please try again, enter board height and then board width: "));
             Ex02.ConsoleUtils.Screen.Clear();
             PrintBoard();
             m_Game.CheckChoises(firstColumnChoise, firstRowChoise, secondColumnChoise, secondRowChoise, out bool toSleep);
-            if(toSleep)
+            if (toSleep)
             {
                 System.Threading.Thread.Sleep(2000);
             }
@@ -203,7 +208,7 @@ Please try again, enter board height and then board width: "));
             {
                 Console.Write(string.Format("{0}, Please enter the cell you want to expose: ", m_Game.CurrentPlayerName()));
                 cell = Console.ReadLine();
-                Quit = CheckIfToQuit(cell);
+                Quit = checkIfToQuit(cell);
                 if (Quit)
                 {
                     Console.Write(string.Format(
@@ -215,18 +220,18 @@ m_Game.CurrentPlayerName()));
                     Environment.Exit('Q');
                 }
             }
-            while (!CheckCell(cell));
+            while (!checkCell(cell));
             ConvertStringToCell(cell, out int row, out int column);
             o_Row = row;
             o_Column = column;
         }
 
-        public bool CheckIfToQuit(string i_Input)
+        private bool checkIfToQuit(string i_Input)
         {
             return i_Input == "Q";
         }
 
-        public bool CheckCell(string i_Cell)
+        private bool checkCell(string i_Cell)
         {
             bool IsValidInput = true;
             if (!m_Game.CheckLength(i_Cell.Length))
@@ -237,17 +242,17 @@ m_Game.CurrentPlayerName()));
                     i_Cell));
             }
 
-            if(IsValidInput)
+            if (IsValidInput)
             {
                 ConvertStringToCell(i_Cell, out int row, out int column);
-                if(!m_Game.CheckBoundries(row, column))
+                if (!m_Game.CheckBoundries(row, column))
                 {
                     IsValidInput = false;
                     Console.WriteLine(string.Format(
                         @"{0} is out of board's boundries!",
                         i_Cell));
                 }
-                else if(m_Game.IsAlreadyFlipped(row, column))
+                else if (m_Game.IsAlreadyFlipped(row, column))
                 {
                     IsValidInput = false;
                     Console.WriteLine(string.Format(
@@ -255,7 +260,7 @@ m_Game.CurrentPlayerName()));
                         i_Cell));
                 }
             }
-            
+
             return IsValidInput;
         }
 
@@ -286,11 +291,28 @@ m_Game.CurrentPlayerName()));
 
         public void CongratsWinner()
         {
-            string winnerName = m_Game.GetWinnerNameAndPoints(out int numOfPoints);
-            Console.WriteLine(string.Format(
-"Congratiulations {0}! you won the game with {1} points!",
-winnerName,
-numOfPoints));
+            string winnerName = m_Game.GetWinnerNameAndPoints(out int numOfPoints, out bool checkTie);
+            if (!checkTie)
+            {
+                Console.WriteLine(string.Format(
+                    "Congratiulations {0}! you won the game with {1} points!",
+                    winnerName,
+                    numOfPoints));
+                System.Threading.Thread.Sleep(3000);
+            }
+            else
+            {
+                Console.WriteLine("Its a Tie!");
+                System.Threading.Thread.Sleep(3000);
+            }
+        }
+
+        private bool toStartOver()
+        {
+            Ex02.ConsoleUtils.Screen.Clear();
+            Console.WriteLine("Would you like to start over? press Y (capital) to start over, press anything else to quit the game");
+            string startOver = Console.ReadLine();
+            return startOver == "Y";
         }
     }
 }

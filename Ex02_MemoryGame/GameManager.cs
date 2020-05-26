@@ -159,14 +159,16 @@ namespace Ex02_MemoryGame
             return name;
         }
 
-        public string GetWinnerNameAndPoints(out int o_NumOfPoints)
-        {
-            if(m_PcPlayer != null)
+        public string GetWinnerNameAndPoints(out int o_NumOfPoints, out bool o_CheckTie)
+        {   
+            if (m_PcPlayer != null)
             {
+                o_CheckTie = m_FirstPlayer.Points == m_PcPlayer.Points;
                 o_NumOfPoints = Math.Max(m_FirstPlayer.Points, m_PcPlayer.Points);
             }
             else
             {
+                o_CheckTie = m_FirstPlayer.Points == m_SecondPlayer.Points;
                 o_NumOfPoints = Math.Max(m_FirstPlayer.Points, m_SecondPlayer.Points);
             }
 

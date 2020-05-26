@@ -61,8 +61,14 @@ namespace Ex02_MemoryGame
 
         public Card this[int row, int column]
         {
-            get { return m_GameBoard[row, column]; }
-            set { m_GameBoard[row, column] = value; }
+            get
+            {
+                return m_GameBoard[row, column];
+            }
+            set 
+            {
+                m_GameBoard[row, column] = value; 
+            }
         }
 
         private void initBoard()

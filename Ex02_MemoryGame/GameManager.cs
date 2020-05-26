@@ -89,14 +89,6 @@ namespace Ex02_MemoryGame
             ExposeCard(o_RowChoise, o_ColumnChoise);
         }
 
-        private int indexHashing()
-        {
-            int hashedIndex;
-            Random randIndex = new Random();
-            hashedIndex = randIndex.Next(0, m_Board.Width * m_Board.Height);
-            return hashedIndex % ((m_Board.Width * m_Board.Height) / 2);
-        }
-
         public void CheckChoises(int i_FirstColumnChoise, int i_FirstRowChoise, int i_SecondColumnChoise, int i_SecondRowChoise, out bool o_ToSleep)
         {
             if(m_Board[i_FirstRowChoise, i_FirstColumnChoise].Index == m_Board[i_SecondRowChoise, i_SecondColumnChoise].Index)
@@ -114,11 +106,11 @@ namespace Ex02_MemoryGame
 
         private void updatePoints()
         {
-            if (m_CurrentPlayer == ePlayerTypes.PC)
+            if(m_CurrentPlayer == ePlayerTypes.PC)
             {
                 m_PcPlayer.Points++;
             }
-            else if (m_CurrentPlayer == ePlayerTypes.FirstPlayer)
+            else if(m_CurrentPlayer == ePlayerTypes.FirstPlayer)
             {
                 m_FirstPlayer.Points++;
             }
@@ -155,7 +147,7 @@ namespace Ex02_MemoryGame
             {
                 name = m_FirstPlayer.Name;
             }
-            else if (m_CurrentPlayer == ePlayerTypes.SecondPlayer)
+            else if(m_CurrentPlayer == ePlayerTypes.SecondPlayer)
             {
                 name = m_SecondPlayer.Name;
             }
@@ -169,7 +161,7 @@ namespace Ex02_MemoryGame
 
         public string GetWinnerNameAndPoints(out int o_NumOfPoints)
         {
-            if (m_PcPlayer != null)
+            if(m_PcPlayer != null)
             {
                 o_NumOfPoints = Math.Max(m_FirstPlayer.Points, m_PcPlayer.Points);
             }
@@ -184,11 +176,11 @@ namespace Ex02_MemoryGame
         private string getWinnerName(int i_NumOfPoints)
         {
             string playerName;
-            if (m_FirstPlayer.Points == i_NumOfPoints)
+            if(m_FirstPlayer.Points == i_NumOfPoints)
             {
                 playerName = m_FirstPlayer.Name;
             }
-            else if (m_SecondPlayer.Points == i_NumOfPoints)
+            else if(m_SecondPlayer.Points == i_NumOfPoints)
             {
                 playerName = m_SecondPlayer.Name;
             }

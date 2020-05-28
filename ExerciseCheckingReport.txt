@@ -1,0 +1,10 @@
+==========================Exercise Checking Report==========================
+Exercise No...........:  2
+First Student Details.: 316498294  - Omer Zidkoni
+Second Student Details: 313524886 - Naor Pashay
+Delivery Date.........: 28 - May - 2020
+Delivered In Delay....: No
+Delay Reason..........: None
+Visual Studio Version.: 2019
+Comments..............: None
+=======================End Exercise Checking Report=========================

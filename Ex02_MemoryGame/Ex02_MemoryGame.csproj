@@ -39,8 +39,6 @@
   <ItemGroup>
     <Compile Include="Board.cs" />
     <Compile Include="Card.cs" />
-    <Compile Include="eGameType.cs" />
-    <Compile Include="ePlayerTypes.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="PcPlayer.cs" />
     <Compile Include="Player.cs" />
@@ -49,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Ex02.ConsoleUtils">
-      <HintPath>..\..\Ex02.ConsoleUtils.dll</HintPath>
+      <HintPath>..\..\מדעי המחשב\שנה ב'\C# .NET\Ex02.ConsoleUtils.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

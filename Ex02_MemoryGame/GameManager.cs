@@ -12,8 +12,8 @@ namespace Ex02_MemoryGame
         private Player m_FirstPlayer;
         private Player m_SecondPlayer;
         private PcPlayer m_PcPlayer = null;
-        private eGameTypes m_GameType;
-        private ePlayerTypes m_CurrentPlayer;
+        private eGameType m_GameType;
+        private ePlayerType m_CurrentPlayer;
 
         public Board Board
         {
@@ -23,13 +23,25 @@ namespace Ex02_MemoryGame
             }
         }
 
-        public GameManager(int i_BoardWidth, int i_BoardHeight, string i_FirstPlayerName, string i_SecondPlayerName, eGameTypes i_GameType)
+        public enum eGameType
+        {
+            AgainstPC = 1,
+            AgainstPlayer = 2
+        }
+
+        public enum ePlayerType
+        {
+            PC,
+            FirstPlayer,
+            SecondPlayer
+        }
+        public GameManager(int i_BoardWidth, int i_BoardHeight, string i_FirstPlayerName, string i_SecondPlayerName, eGameType i_GameType)
         {
             m_Board = new Board(i_BoardHeight, i_BoardWidth);
             m_GameType = i_GameType;
             m_FirstPlayer = new Player(i_FirstPlayerName);
-            m_CurrentPlayer = ePlayerTypes.FirstPlayer;
-            if(i_GameType == eGameTypes.AgainstPC)
+            m_CurrentPlayer = ePlayerType.FirstPlayer;
+            if(i_GameType == eGameType.AgainstPC)
             {
                 m_PcPlayer = new PcPlayer();
             }
@@ -39,7 +51,7 @@ namespace Ex02_MemoryGame
             }
         }
 
-        public eGameTypes GameType
+        public eGameType GameType
         {
             get
             {
@@ -47,7 +59,7 @@ namespace Ex02_MemoryGame
             }
         }
 
-        public ePlayerTypes CurrentPlayer
+        public ePlayerType CurrentPlayer
         {
             get 
             {
@@ -63,7 +75,7 @@ namespace Ex02_MemoryGame
         public bool IsEnded()
         {
             bool IsEnded;
-            if(m_GameType == eGameTypes.AgainstPC)
+            if(m_GameType == eGameType.AgainstPC)
             {
                 IsEnded = m_FirstPlayer.Points + m_PcPlayer.Points == (m_Board.Width * m_Board.Height) / 2;
             }
@@ -106,11 +118,11 @@ namespace Ex02_MemoryGame
 
         private void updatePoints()
         {
-            if(m_CurrentPlayer == ePlayerTypes.PC)
+            if(m_CurrentPlayer == ePlayerType.PC)
             {
                 m_PcPlayer.Points++;
             }
-            else if(m_CurrentPlayer == ePlayerTypes.FirstPlayer)
+            else if(m_CurrentPlayer == ePlayerType.FirstPlayer)
             {
                 m_FirstPlayer.Points++;
             }
@@ -143,11 +155,11 @@ namespace Ex02_MemoryGame
         public string CurrentPlayerName()
         {
             string name;
-            if(m_CurrentPlayer == ePlayerTypes.FirstPlayer)
+            if(m_CurrentPlayer == ePlayerType.FirstPlayer)
             {
                 name = m_FirstPlayer.Name;
             }
-            else if(m_CurrentPlayer == ePlayerTypes.SecondPlayer)
+            else if(m_CurrentPlayer == ePlayerType.SecondPlayer)
             {
                 name = m_SecondPlayer.Name;
             }

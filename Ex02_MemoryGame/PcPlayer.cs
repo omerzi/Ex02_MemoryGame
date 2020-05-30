@@ -8,7 +8,7 @@ namespace Ex02_MemoryGame
 {
     public class PcPlayer
     {
-        private readonly string m_Name = "Computer";
+        private readonly string r_Name = "Computer";
         private int m_Points = 0;
 
         public int Points
@@ -28,7 +28,7 @@ namespace Ex02_MemoryGame
         {
             get 
             {
-                return m_Name;
+                return r_Name;
             }
         }
     }

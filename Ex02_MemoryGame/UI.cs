@@ -56,7 +56,7 @@ namespace Ex02_MemoryGame
             Console.WriteLine(gameToPrint);
         }
 
-        public void ReadPlayersNames(out string o_FirstPlayerName, out string o_SecondPlayerName, out eGameTypes o_GameType)
+        public void ReadPlayersNames(out string o_FirstPlayerName, out string o_SecondPlayerName, out GameManager.eGameType o_GameType)
         {
             Console.WriteLine("Hello, please enter your name: ");
             checkName(out string name);
@@ -65,8 +65,8 @@ namespace Ex02_MemoryGame
 "Hi there {0}! please press 1 to play against the Computer, press 2 to play against another player: ",
 o_FirstPlayerName));
             checkGameType(out int numOfPlayers);
-            o_GameType = (eGameTypes)numOfPlayers;
-            if (o_GameType == eGameTypes.AgainstPC)
+            o_GameType = (GameManager.eGameType)numOfPlayers;
+            if (o_GameType == GameManager.eGameType.AgainstPC)
             {
                 o_SecondPlayerName = "PC";
             }
@@ -93,7 +93,7 @@ please enter a valid name: "));
         private void checkGameType(out int o_NumOfPlayers)
         {
             bool checkIsValid = int.TryParse(Console.ReadLine(), out o_NumOfPlayers);
-            while (!checkIsValid || (o_NumOfPlayers != (int)eGameTypes.AgainstPC && o_NumOfPlayers != (int)eGameTypes.AgainstPlayer))
+            while (!checkIsValid || (o_NumOfPlayers != (int)GameManager.eGameType.AgainstPC && o_NumOfPlayers != (int)GameManager.eGameType.AgainstPlayer))
             {
                 Console.WriteLine(string.Format(
 @"You entered wrong number of players. 
@@ -122,7 +122,7 @@ Please try again, enter board height and then board width: "));
 
         public void SetupGame()
         {
-            ReadPlayersNames(out string firstPlayerName, out string secondPlayerName, out eGameTypes gameType);
+            ReadPlayersNames(out string firstPlayerName, out string secondPlayerName, out GameManager.eGameType gameType);
             ReadBoardSize(out int boardWidth, out int boardHeight);
             m_Game = new GameManager(boardWidth, boardHeight, firstPlayerName, secondPlayerName, gameType);
             m_ObjectArray = new char[(boardHeight * boardWidth) / 2];
@@ -157,7 +157,7 @@ Please try again, enter board height and then board width: "));
         {
             Ex02.ConsoleUtils.Screen.Clear();
             PrintBoard();
-            if (m_Game.CurrentPlayer == ePlayerTypes.PC)
+            if (m_Game.CurrentPlayer == GameManager.ePlayerType.PC)
             {
                 Console.WriteLine("PC is choosing cells");
                 m_Game.PCTurn(out int firstRowChoise, out int firstColumnChoise);
@@ -173,7 +173,7 @@ Please try again, enter board height and then board width: "));
                     System.Threading.Thread.Sleep(2000);
                 }
 
-                m_Game.CurrentPlayer = ePlayerTypes.FirstPlayer;
+                m_Game.CurrentPlayer = GameManager.ePlayerType.FirstPlayer;
             }
             else
             {
@@ -272,20 +272,20 @@ m_Game.CurrentPlayerName()));
 
         public void ChangeCurrentPlayer()
         {
-            if (m_Game.GameType == eGameTypes.AgainstPlayer)
+            if (m_Game.GameType == GameManager.eGameType.AgainstPlayer)
             {
-                if (m_Game.CurrentPlayer == ePlayerTypes.FirstPlayer)
+                if (m_Game.CurrentPlayer == GameManager.ePlayerType.FirstPlayer)
                 {
-                    m_Game.CurrentPlayer = ePlayerTypes.SecondPlayer;
+                    m_Game.CurrentPlayer = GameManager.ePlayerType.SecondPlayer;
                 }
                 else
                 {
-                    m_Game.CurrentPlayer = ePlayerTypes.FirstPlayer;
+                    m_Game.CurrentPlayer = GameManager.ePlayerType.FirstPlayer;
                 }
             }
             else
             {
-                m_Game.CurrentPlayer = ePlayerTypes.PC;
+                m_Game.CurrentPlayer = GameManager.ePlayerType.PC;
             }
         }
 

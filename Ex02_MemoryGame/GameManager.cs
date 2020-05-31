@@ -35,6 +35,7 @@ namespace Ex02_MemoryGame
             FirstPlayer,
             SecondPlayer
         }
+        
         public GameManager(int i_BoardWidth, int i_BoardHeight, string i_FirstPlayerName, string i_SecondPlayerName, eGameType i_GameType)
         {
             m_Board = new Board(i_BoardHeight, i_BoardWidth);
